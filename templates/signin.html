@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block body %}
+<style>
+    .block{
+        margin-top:20px;
+    }
+
+    .hide{
+            visibility :hidden
+        }
+
+
+</style>
+<div class="container block">
+  <div class="card-body">
+{% if messages %}
+  <div class="row">
+  <div class="col-sm-6 col-sm-offset-3">
+      {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}" role="alert">
+          <p>{{ message }}</p>
+      </div>
+      {% endfor %}
+    </div>
+
+  </div>
+{% endif %}
+  <h4>Signin to proceed :</h4><hr>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-dark">Submit</button>
+  </form><hr>
+    Not a user ?  <a href="{% url 'signup' %}">Sign up </a>for free
+  </div>
+</div>
+{% endblock body %}
+

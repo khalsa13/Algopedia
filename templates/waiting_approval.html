@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block body %}
+<style>
+    .block{
+        margin-top:20px;
+    }
+
+    .hide{
+            visibility :hidden
+        }
+
+
+</style>
+<div class="col-md-6 container block">
+  <div class="card-body">
+  <h1>Your post has been queued for moderation</h1><hr>
+  <p>Please wait a bit for an admin to review it.</p>
+  Return to <a href="{% url 'home' %}">home</a>
+  </div>
+</div>
+{% endblock body %}
+

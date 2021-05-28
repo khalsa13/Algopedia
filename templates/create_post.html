@@ -1,0 +1,38 @@
+
+{% extends "base.html" %}
+
+{% block body %}
+<style>
+    .block{
+        margin-top:20px;
+    }
+
+    .but{
+        visibility:hidden;
+    }
+</style>
+<div class ="container block">
+{% if request.user.username %}
+{% block javascript %}  <script> function validate() {
+     var name = document.getElementById('id_title').value;
+      if(name==" ")return false; }
+</script>  {% endblock %}
+<h4>Add Post:</h4><hr/>
+ <form action="{% url 'wait' %}" name="Form" onsubmit="validate()" enctype="multipart/form-data" method="POST">
+     {% csrf_token %}
+        {{form.media}}
+        {{form.as_p}}
+    <div id="submit"><input type="submit" onclick="return confirm('Are you sure you want to save this?')" class ="btn btn-dark" value="Submit"></div>
+</form>
+    {% else %}
+    <h3>You have been logged out.</h3><hr>
+    <h5>Take me to the sign in page  <a href="{% url 'signin' %}" >Click here</a></h5>
+
+
+{% endif %}
+
+
+</div>
+
+{%endblock body%}
+

@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    {% extends 'base.html' %}
+    {% block body %}
+    <style>
+    img {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 50%;
+    }
+
+    .but{
+        visibility:hidden;
+    }
+    </style>
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-12 card mb-4 mt-3 left top">
+                  <div class="card-body">
+                    <a style="float:right;" href="{% url 'edit_post' object.slug %} " class="btn btn-dark">Update
+                        Post</a></h1>
+                      <h1> <b>{{ object.title }}</b></h1>
+                    <p class=" text-muted"><small>Last Updated : {{ object.updated_on }}</small></p>
+                    {% if object.explain %}
+                    <h3>Explanation :</h3><p class="card-text ">{{ object.explain | safe }}</p><hr>
+                    {% endif %}
+                    {% if object.adv %}
+                    <h3>Advantages :</h3><p class="card-text ">{{ object.adv | safe }}</p><hr>
+                    {% endif %}
+                    {% if object.disadv %}
+                    <h3>Disadvantages :</h3><p class="card-text ">{{ object.disadv | safe }}</p><hr>
+                    {% endif %}
+                    {% if object.similar %}
+                    <h3>Similar Algorithms :</h3><p class="card-text ">{{ object.similar | safe }}</p><hr>
+                    {% endif %}
+                    {% if object.image %}
+                    <a href="{{post.image.url}}"><img src="{{ object.image.url }}"/></a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endblock body %}
+</head>
+<body>
+
+</body>
+</html>
+
+
+

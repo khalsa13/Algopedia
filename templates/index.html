@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+{% block body %}
+<style>
+    body {
+        font-family: "Roboto", sans;
+        background-color: #ffffff;
+    }
+    .site-heading{
+        font-family: "Times New Roman", Times, serif;
+    }
+    .head_text {
+        color: white;
+    }
+
+    .container2 {
+        position:relative;
+        margin-top:20px;
+        display: flex;
+        justify-content: center;
+        text-align:center;
+    }
+
+    .pagination a {
+      padding: 0px 16px;
+    }
+    .card-block{
+        padding:20px;
+    }
+    .card{
+        margin-bottom: 20px !important;
+     }
+    .img{
+        padding:5%;
+    }
+
+
+
+
+</style>
+
+
+<div class=" container2  ">
+
+    <form class="form-inline " method="GET" action="{% url 'post_search' %}">
+        {% csrf_token %}
+        <div class="input-group">
+            <input class="form-control" type="text" name="q" placeholder="Search" aria-label="Search"
+                   value="{{request.GET.q}}">
+            <input class="btn btn-info  ml-2" type="submit" value="Search" name="submit"/>
+        </div>
+    </form>
+
+</div>
+<div class="container2 col-md-12 ">
+    <div class="row">
+        <div class=" col-md-12 ">
+            <div class="site-heading">
+                <h1> Welcome to the room full of Algorithms
+
+                </h1>
+                <p>We serve you the full meal of Algorithms. You can add your flavours by creating new algorithms or by
+                    updating the already existing ones.&nbsp
+                </p>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Sidebar Widgets Column -->
+<div class="col-md-3 float-right ">
+    <div class="card ">
+        <h5 class="card-header">Categories</h5>
+        <div class="list-group">
+            <a href="{% url 'category_search' 'Searching' %}"
+               class="list-group-item list-group-item-action">Searching</a>
+            <a href="{% url 'category_search' 'Sorting' %}" class="list-group-item list-group-item-action">Sorting</a>
+            <a href="{% url 'category_search' 'Recursion' %}"
+               class="list-group-item list-group-item-action">Recursion</a>
+            <a href="{% url 'category_search' 'Backtracking' %}" class="list-group-item list-group-item-action">Backtracking</a>
+            <a href="{% url 'category_search' 'Greedy' %}" class="list-group-item list-group-item-action">Greedy </a>
+            <a href="{% url 'category_search' 'Dynamic Programming' %}" class="list-group-item list-group-item-action">Dynamic
+                Programming</a>
+            <a href="{% url 'category_search' 'Maths' %}"
+               class="list-group-item list-group-item-action ">Maths </a>
+            <a href="{% url 'category_search' 'Bit Manipulation' %}" class="list-group-item list-group-item-action">Bit
+                Manipulation</a>
+            <a href="{% url 'category_search' 'Graphs' %}" class="list-group-item list-group-item-action ">Graphs</a>
+            <a href="{% url 'category_search' 'Others' %}" class="list-group-item list-group-item-action ">Others</a>
+
+        </div>
+    </div>
+</div>
+<!-- Search bar results if available-->
+{% if results %}
+{% for post in results %}
+<div class="container ">
+    <div class="card ">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card-block">
+                    <h3 class="card-title">{{post.title}}</h3>
+                    <p class="card-text text-muted h6">{{ post.category}} </p>
+                    <hr>
+                    <p class="card-text">
+                        <small>{{ post.explain|safe|slice:':200'}}</small>
+                    </p>
+                    <a href="{% url 'post_detail' post.slug  %}" class="btn btn-info">Read More &rarr;</a>
+                </div>
+            </div>
+            <div class="col-md-6 container2">
+                {% if post.image %}
+                <div class="img img-fluid"><a href="{{ post.image.url }}"> <img height="250px" width="250px"
+                                                                                src="{{ post.image.url }}"></a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+<!-- complete page when no search is there -->
+{% if results is None %}
+{% for post in posts %}
+<div class="container">
+    <div class="card">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card-block">
+                    <h3 class="card-title">{{post.title}}</h3>
+                    <p class="card-text text-muted h6">{{ post.category}} </p>
+                    <hr>
+                    <p class="card-text">
+                        <small>{{ post.explain|safe|slice:':200'}}</small>
+                    </p>
+                    <a href="{% url 'post_detail' post.slug  %}" class="btn btn-info">Read More &rarr;</a>
+                </div>
+            </div>
+            <div class="col-md-6 container2">
+                {% if post.image %}
+                <div class="img img-fluid"><a href="{{ post.image.url }}"> <img height="250px" width="250px"
+                                                                                src="{{ post.image.url }}"></a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+
+<br>
+<!--Adding pagination-->
+{% if posts.has_other_pages %}
+<ul class="pagination justify-content-center">
+    {% if posts.has_previous %}
+    <li><a href="?page={{ posts.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+    <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in posts.paginator.page_range %}
+    {% if posts.number == i %}
+    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+    {% else %}
+    <li><a href="?page={{ i }}">{{ i }}</a></li>
+    {% endif %}
+    {% endfor %}
+    {% if posts.has_next %}
+    <li><a href="?page={{ posts.next_page_number }}">&raquo;</a></li>
+    {% else %}
+    <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+</ul>
+{% endif %}
+{%endblock body%}
+

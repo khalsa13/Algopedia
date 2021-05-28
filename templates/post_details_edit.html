@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    {% extends 'base.html' %}
+    {% block body %}
+    <style>
+        img {
+
+            display: block;
+            max-width:300px;
+            max-height:300px;
+            width: auto;
+            height: auto;
+        }
+
+    .but{
+        visibility:hidden;
+    }
+    </style>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 card mb-4 mt-3 left top">
+                <div class="card-body">
+
+                    <h1 style="text-align:center;"> <b>{{ post.title }}</b></h1>
+                    <p class="card-text ">{{ post.content | safe }}</p>
+                    <form action=" {% url 'wait'%}" enctype="multipart/form-data" method="POST">
+                        <input type="hidden" name="post_id_extra" value="{{post.id}}"/>
+                        <input type="hidden" name="post_title_extra" value="{{post.title}}"/>
+                        <input type="hidden" name="post_explain_extra" value="{{post.explain}}"/>
+                        <input type="hidden" name="post_adv_extra" value="{{post.adv}}"/>
+                        <input type="hidden" name="post_disadv_extra" value="{{post.disadv}}"/>
+                        <input type="hidden" name="post_similar_extra" value="{{post.similar}}"/>
+
+                        {% csrf_token %}
+                        {{form.media}}
+                        <h4>Add Explanation :</h4>{{form.explain}}<hr>
+                        <h4>Add Advantages :</h4>{{form.adv}}<hr>
+                        <h4>Add Disadvantages :</h4>{{form.disadv}}<hr>
+                        <h4>Add Similar Algorithms :</h4>{{form.similar}}<hr>
+
+                        <div id="submit"><input type="submit"
+                                                onclick="return confirm('Are you sure you want to Update this?')"
+                                                class="btn btn-dark" value="Update Content"></div>
+                    </form>
+                    <br>
+                    {% if post.image %}
+                    <a href="{{post.image.url}}"><img src="{{ post.image.url }}"/></a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endblock body %}
+</head>
+<body>
+
+</body>
+</html>

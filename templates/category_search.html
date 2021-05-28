@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block body %}
+<style>
+    body {
+        font-family: "Roboto", sans;
+        background-color: #ffffff;
+    }
+    .site-heading{
+        font-family: "Times New Roman", Times, serif;
+    }
+    .head_text {
+        color: white;
+    }
+    .card-block{
+        padding:20px;
+    }
+    .card{
+        margin-bottom: 20px !important;
+     }
+    .img{
+        padding:5%;
+    }
+    .container{
+        margin-top:20px;
+    }
+
+
+</style>
+
+{% if posts  %}
+{% for post in posts %}
+<div class="container">
+    <div class="card">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card-block">
+                    <h3 class="card-title">{{post.title}}</h3>
+                    <p class="card-text text-muted h6">{{ post.category}} </p><hr>
+                    <p class="card-text">
+                        <small>{{ post.explain|safe|slice:':200'}}</small>
+                    </p>
+                    <a href="{% url 'post_detail' post.slug  %}" class="btn btn-info">Read More &rarr;</a>
+                </div>
+            </div>
+            <div class="col-md-6 container2">
+                {% if post.image %}
+                <div class="img img-fluid"><a href="{{ post.image.url }}"> <img height="250px" width="250px"
+                                                                                src="{{ post.image.url }}"></a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% else %}
+<div class="container site-heading">
+    <h1 style="text-align:center">Looking for something, start serving others first.</h1>
+</div>
+{% endif %}
+<br>
+{%endblock body%}
+
+

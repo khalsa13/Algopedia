@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Interview Preparation Hub</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+    <meta name="google" content="notranslate"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous"/>
+</head>
+
+<body>
+<style>
+        body {
+            font-family: "Roboto", sans-serif;
+            font-size: 17px;
+            background-color: #fdfdfd;
+        }
+        .btn-danger {
+            color: #fff;
+            background-color: #f00000;
+            border-color: #dc281e;
+        }
+
+        .navbar-custom {
+            background-color: #000000;
+            margin-bottom:-5px;
+        }
+        .id_copyright {
+            position: relative;
+            bottom: 0;
+            height: 3em;
+            width: 100%;
+            padding-top: 1.5em;
+        }
+
+
+</style>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom " id="mainNav">
+    <div class="container-fluid">
+        <a class="navbar-brand " href="{% url 'home' %}"><b>ALGOTRAY</b></a>
+
+        {% if request.user.username %}
+        <span class=" text-white hide">Logged in as : {{ request.user.username}} &nbsp;
+         <a href="{% url 'logout'%}" class="btn btn-info btn-sm hide"> Logout</a> &nbsp; &nbsp;
+         <a href="{% url 'create_post'%}" class="btn btn-sm btn-info hide"> Write New Algorithm</a>
+        </span>
+        {% else %}
+        <span class=" text-white  ">
+        <a href="{% url 'signin'%}" class="btn btn-sm btn-info hide">  Sign In </a>&nbsp; &nbsp;
+        <a href="{% url 'signin'%}" class="btn btn-info btn-sm hide"> Write New Algorithm</a>
+        </span>
+        {% endif %}
+
+
+    </div>
+</nav>
+
+{% block body %}
+<!-- Content Goes here -->
+{% endblock body %}
+
+<!-- Footer -->
+<footer class="id_copyright">
+    <p class=" text-center">Copyright &copy; Algotray.com</p>
+</footer>
+</body>
+</html>
+
+
